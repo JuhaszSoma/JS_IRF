@@ -79,6 +79,15 @@ namespace UserMaintenance {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rekord törlése.
+        /// </summary>
+        internal static string DeleteRecord {
+            get {
+                return ResourceManager.GetString("DeleteRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Név .
         /// </summary>
         internal static string FullName {

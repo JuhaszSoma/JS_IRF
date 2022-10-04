@@ -123,6 +123,9 @@
   <data name="AddToFile" xml:space="preserve">
     <value>Fájlba írás</value>
   </data>
+  <data name="DeleteRecord" xml:space="preserve">
+    <value>Rekord törlése</value>
+  </data>
   <data name="FullName" xml:space="preserve">
     <value>Név </value>
   </data>
