@@ -7,14 +7,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Week6.Entities;
 
 namespace Week6
 {
     public partial class Form1 : Form
     {
+        new List<Ball> _balls = new List<Ball>();
+        private BallFactory _factory;
+        public BallFactory Factory {
+            get { return _factory; }
+            set { _factory = value; } 
+        }
+
         public Form1()
         {
             InitializeComponent();
+            Factory = new BallFactory();
+        }
+
+        public int MyProperty { get; set; }
+
+        private void createTimer_Tick(object sender, EventArgs e)
+        {
+            var ball = Factory.CreateNew();
+            _balls.Add(ball);
+            ball.Left = -ball.Width;
+            mainPanel.Controls.Add(ball);
+        }
+
+        private void conveyorTimer_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }
