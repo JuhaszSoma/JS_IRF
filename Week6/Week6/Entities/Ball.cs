@@ -16,6 +16,7 @@ namespace Week6
             AutoSize = false;
             Width = 50;
             Height = Width;
+            this.Paint += Ball_Paint;
 
         }
 
@@ -31,7 +32,7 @@ namespace Week6
 
         public void Move_Ball()
         {
-            Left += 1;
+            Left += 1;          
         }
     }
 }

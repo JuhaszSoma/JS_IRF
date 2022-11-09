@@ -13,11 +13,13 @@ namespace Week6
 {
     public partial class Form1 : Form
     {
-        new List<Ball> _balls = new List<Ball>();
+        List<Ball> _balls = new List<Ball>();
         private BallFactory _factory;
-        public BallFactory Factory {
+
+        public BallFactory Factory
+        {
             get { return _factory; }
-            set { _factory = value; } 
+            set { _factory = value; }
         }
 
         public Form1()
@@ -25,8 +27,6 @@ namespace Week6
             InitializeComponent();
             Factory = new BallFactory();
         }
-
-        public int MyProperty { get; set; }
 
         private void createTimer_Tick(object sender, EventArgs e)
         {
@@ -38,7 +38,23 @@ namespace Week6
 
         private void conveyorTimer_Tick(object sender, EventArgs e)
         {
-
+            
+            int maxPosition = 0;
+            foreach (var item in _balls)
+            {
+                item.Move_Ball();
+                if (item.Left >maxPosition)
+                {
+                    maxPosition = item.Left;
+                }
+            }
+            if (maxPosition>mainPanel.Width)
+            {
+                Ball Torlendo = _balls[0];
+                _balls.Remove(Torlendo);
+                mainPanel.Controls.Remove(Torlendo);
+            }
+            
         }
     }
 }
