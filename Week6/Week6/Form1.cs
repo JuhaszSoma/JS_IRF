@@ -7,16 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Week6.Abstarctions;
 using Week6.Entities;
 
 namespace Week6
 {
     public partial class Form1 : Form
     {
-        List<Ball> _balls = new List<Ball>();
-        private BallFactory _factory;
+        List<Toy> _toys = new List<Toy>();
+        private IToyFactory _factory;
 
-        public BallFactory Factory
+        public IToyFactory Factory
         {
             get { return _factory; }
             set { _factory = value; }
@@ -25,24 +26,24 @@ namespace Week6
         public Form1()
         {
             InitializeComponent();
-            Factory = new BallFactory();
+            Factory = new CarFactory();
         }
 
         private void createTimer_Tick(object sender, EventArgs e)
         {
-            var ball = Factory.CreateNew();
-            _balls.Add(ball);
-            ball.Left = -ball.Width;
-            mainPanel.Controls.Add(ball);
+            var toy = Factory.CreateNew();
+            _toys.Add(toy);
+            toy.Left = -toy.Width;
+            mainPanel.Controls.Add(toy);
         }
 
         private void conveyorTimer_Tick(object sender, EventArgs e)
         {
             
             int maxPosition = 0;
-            foreach (var item in _balls)
+            foreach (var item in _toys)
             {
-                item.Move_Ball();
+                item.Move_Toy();
                 if (item.Left >maxPosition)
                 {
                     maxPosition = item.Left;
@@ -50,8 +51,8 @@ namespace Week6
             }
             if (maxPosition>mainPanel.Width)
             {
-                Ball Torlendo = _balls[0];
-                _balls.Remove(Torlendo);
+                Toy Torlendo = _toys[0];
+                _toys.Remove(Torlendo);
                 mainPanel.Controls.Remove(Torlendo);
             }
             
