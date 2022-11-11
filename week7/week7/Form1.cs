@@ -32,5 +32,21 @@ namespace week7
             Portfolio.Add(new PortfolioItem() { Index = "ELMU", Volume = 10 });
 
         }
+
+        private decimal GetPortfolioValue(DateTime date)
+        {
+            decimal value = 0;
+            foreach (var item in Portfolio)
+            {
+                var last = (from x in Ticks
+                            where item.Index == x.Index.Trim()
+                               && date <= x.TradingDay
+                            select x)
+                            .First();
+                value += (decimal)last.Price * item.Volume;
+            }
+            return value;
+        }
+
     }
 }
