@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace week7
     {
         PortfolioEntities context = new PortfolioEntities();
         List<Tick> Ticks;
+        List<decimal> nyereségekRendezve;
         List<PortfolioItem> Portfolio;
 
         public Form1()
@@ -38,7 +40,7 @@ namespace week7
                 Console.WriteLine(i + " " + ny);
             }
 
-            var nyereségekRendezve = (from x in Nyereségek
+            nyereségekRendezve = (from x in Nyereségek
                                       orderby x
                                       select x)
                                         .ToList();
@@ -69,5 +71,29 @@ namespace week7
             return value;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var sfd = new SaveFileDialog();
+
+            if (sfd.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (StreamWriter iro = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+            {
+                iro.WriteLine("A;B");
+
+                var counter = 1;
+                foreach (var item in nyereségekRendezve)
+                {
+                    iro.Write(counter.ToString());
+                    iro.Write(";");
+                    iro.Write(item.ToString());
+                    iro.WriteLine();
+                    counter++;
+                }
+            }
+            
+            
+        }
     }
 }
