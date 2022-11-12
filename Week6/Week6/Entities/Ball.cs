@@ -5,33 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Week6.Abstarctions;
 
 namespace Week6
 {
-    public class Ball : Label
+    public class Ball : Toy
     {
+        public SolidBrush BallColor { get; private set; }
+        
 
-        public Ball()
+        public Ball(Color ballColor)
         {
-            AutoSize = false;
-            Width = 50;
-            Height = Width;
-
+            BallColor = new SolidBrush(ballColor);
+        }
+        protected override void DrawImage(Graphics g)
+        {   
+            g.FillEllipse(BallColor, 0, 0, Width, Height);
         }
 
-        private void Ball_Paint(object sender, PaintEventArgs e)
-        {
-            DrawImage(e.Graphics);
-        }
-
-        protected void DrawImage(Graphics g)
-        {
-            g.FillEllipse(new SolidBrush(Color.Blue), 0, 0, Width, Height);
-        }
-
-        public void Move_Ball()
-        {
-            Left += 1;
-        }
     }
 }
