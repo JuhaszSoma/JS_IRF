@@ -10,10 +10,18 @@ using Week6.Abstarctions;
 namespace Week6
 {
     public class Ball : Toy
-    {        
-        protected override void DrawImage(Graphics g)
+    {
+        public SolidBrush BallColor { get; private set; }
+        
+
+        public Ball(Color ballColor)
         {
-            g.FillEllipse(new SolidBrush(Color.Blue), 0, 0, Width, Height);
+            BallColor = new SolidBrush(ballColor);
         }
+        protected override void DrawImage(Graphics g)
+        {   
+            g.FillEllipse(BallColor, 0, 0, Width, Height);
+        }
+
     }
 }
