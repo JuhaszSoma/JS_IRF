@@ -15,10 +15,12 @@ namespace Week10
     {
         GameController gc = new GameController();
         GameArea ga;
-        int populationSize = 100;
+        int populationSize = 1000;
         int nbrOfSteps = 10;
         int nbrOfStepsIncrement = 10;
         int generation = 1;
+        Brain gyozoagy = null;
+
         public Form1()
         {
             InitializeComponent();
@@ -31,23 +33,46 @@ namespace Week10
             {
                 gc.AddPlayer(nbrOfSteps);
             }
-            gc.Start(true);            
+            gc.Start(true);             
         }
 
         private void PopulacioFrissit(object sender)
         {
             generation++;
+
+            // generáció kiírás
             label1.BringToFront();
             label1.Text = string.Format(
                 "{0}.generáció", 
                 generation);
 
+
+
+            // top játékosok gyűjtése
             var playerList = from p in gc.GetCurrentPlayers()
                              orderby p.GetFitness() descending
                              select p;
             var topPerformers = playerList.Take(populationSize / 2).ToList();
 
+
+            // van nyertes? ha van befejezi
+            var winners = from p in topPerformers
+                          where p.IsWinner
+                          select p;
+
+            if (winners.Count() > 0)
+            {
+                gyozoagy = winners.FirstOrDefault().Brain.Clone();
+                gc.GameOver -= PopulacioFrissit;
+                return;
+            }
+
+
+
             gc.ResetCurrentLevel();
+
+
+            //top performers mutálása
             foreach (var p in topPerformers)
             {
                 var b = p.Brain.Clone();
@@ -61,8 +86,19 @@ namespace Week10
                 else
                     gc.AddPlayer(b.Mutate());
             }
+
+
             gc.Start();
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            gc.ResetCurrentLevel();
+            gc.AddPlayer(winnerBrain.Clone());
+            gc.AddPlayer();
+            ga.Focus();
+            gc.Start(true);
         }
     }
 }
