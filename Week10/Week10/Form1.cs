@@ -25,12 +25,27 @@ namespace Week10
 
             ga = gc.ActivateDisplay();
             Controls.Add(ga);
+            gc.GameOver += PopulacioFrissit;
 
             for (int i = 0; i < populationSize; i++)
             {
                 gc.AddPlayer(nbrOfSteps);
             }
-            gc.Start(true);
+            gc.Start(true);            
+        }
+
+        private void PopulacioFrissit(object sender)
+        {
+            generation++;
+            label1.BringToFront();
+            label1.Text = string.Format(
+                "{0}.generáció", 
+                generation);
+
+            var playerList = from p in gc.GetCurrentPlayers()
+                             orderby p.GetFitness() descending
+                             select p;
+            var topPerformers = playerList.Take(populationSize / 2).ToList();
         }
     }
 }
