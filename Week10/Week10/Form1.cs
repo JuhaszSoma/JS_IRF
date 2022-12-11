@@ -21,6 +21,8 @@ namespace Week10
 
             ga = gc.ActivateDisplay();
             Controls.Add(ga);
+            gc.AddPlayer();
+            gc.Start(true);
         }
     }
 }
