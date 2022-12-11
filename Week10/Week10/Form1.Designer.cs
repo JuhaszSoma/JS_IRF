@@ -36,7 +36,7 @@ namespace Week10
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(596, 418);
+            this.label1.Location = new System.Drawing.Point(494, 418);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 17);
             this.label1.TabIndex = 0;
